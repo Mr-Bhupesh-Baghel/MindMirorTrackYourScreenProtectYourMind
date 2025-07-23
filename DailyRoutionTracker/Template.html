@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Daily Routine Tracker</title>
+  <link rel="stylesheet" href="Template.css">
 </head>
 <body>
-    <h1>coming soom</h1>
+
+  <h1>🌄 Daily Routine Tracker</h1>
+  <div class="progress-bar"><div id="progress" class="progress">0%</div></div>
+
+  <div id="taskContainer"></div>
+
+  <div class="add-task task-group">
+    <h3>Add Custom Task</h3>
+    <input type="text" id="customTaskInput" placeholder="Enter your task">
+    <button onclick="addCustomTask()">Add</button>
+  </div>
+
+  <div class="task-group">
+    <button onclick="viewPrevious()">📅 View Previous Work</button>
+  </div>
+<script src="Template.js"></script>
 </body>
 </html>

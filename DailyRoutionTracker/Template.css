@@ -1,0 +1,54 @@
+  body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 20px;
+    }
+    h2 { margin-top: 30px; }
+    .task-group {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .progress {
+      height: 100%;
+      background: #4caf50;
+      width: 0%;
+      text-align: center;
+      color: white;
+      line-height: 20px;
+      font-size: 12px;
+    }
+    .add-task {
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      padding: 5px;
+      width: 70%;
+    }
+    button {
+      padding: 5px 10px;
+      margin-left: 5px;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .task-item span {
+      flex: 1;
+    }
