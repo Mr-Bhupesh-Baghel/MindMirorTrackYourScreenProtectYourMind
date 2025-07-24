@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Push-Up Challenge Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .day {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      margin: 10px auto;
+      padding: 10px 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .day.done {
+      background: #d4edda;
+    }
+    .day.pending {
+      background: #f8d7da;
+    }
+    .target {
+      font-weight: bold;
+      color: #555;
+    }
+    button {
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .done-btn {
+      background-color: #28a745;
+      color: white;
+    }
+    .done-btn[disabled] {
+      background: gray;
+      cursor: not-allowed;
+    }
+    .reset-btn {
+      background-color: #dc3545;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>💪 Push-Up Challenge Tracker</h1>
+<div id="tracker"></div>
+<button class="reset-btn" onclick="resetTracker()">🔁 Reset Progress</button>
+
+<script>
+  const totalDays = 50;
+const basePushups = 10;
+const tracker = document.getElementById('tracker');
+const progress = JSON.parse(localStorage.getItem('pushupProgress')) || {};
+
+const messages = [
+  "Start strong! 💪", "Push a bit harder! 🔥", "Feeling it yet? 😅", "Nice form!", "You're doing great!",
+  "Almost a week done!", "1 week complete! 🎉", "Keep pushing!", "Discipline over motivation!", "You're in the zone!",
+  "10 days down! 🔥", "Leveling up!", "You’re stronger than you think!", "Crush it today!", "Midway milestone soon!",
+  "Body is transforming!", "Respect your progress!", "Push harder!", "Don’t slow down!", "Halfway done! 🏁",
+  "Now it gets fun!", "More control, more strength!", "You're a machine!", "This is your routine!", "Mind over muscle!",
+  "You inspire yourself!", "Momentum is real!", "Stay sharp!", "Only a few days left!", "Push-up master loading…",
+  "This habit = power!", "No breaks now!", "Fire mode ON 🔥", "Keep proving it!", "Discipline > Excuses",
+  "Almost there!", "Strength, grit, growth!", "Big goals, small steps!", "Never back down!", "Beast mode unlocked!",
+  "Closer than ever!", "Your 50 is near!", "Legend mode starting!", "Break all limits!", "Hard work pays off!",
+  "Final lap!", "Stay consistent!", "Push-up BOSS!", "49 Done – One more!", "🎯 50/50 – MISSION COMPLETE! 🏆"
+];
+
+function renderTracker() {
+  tracker.innerHTML = '';
+  for (let i = 1; i <= totalDays; i++) {
+    const dayStatus = progress[i] || 'pending';
+    const target = basePushups + (i - 1);
+    const message = messages[i - 1] || "You got this!";
+    const div = document.createElement('div');
+    div.className = `day ${dayStatus}`;
+    div.innerHTML = `
+      <div>
+        <div><strong>Day ${i}</strong></div>
+        <div class="target">🎯 Target: ${target} push-ups</div>
+        <div>${message}</div>
+      </div>
+      <div>
+        <button class="done-btn" onclick="markDone(${i})" ${dayStatus === 'done' ? 'disabled' : ''}>✅ Done</button>
+      </div>
+    `;
+    tracker.appendChild(div);
+  }
+}
+
+function markDone(day) {
+  progress[day] = 'done';
+  localStorage.setItem('pushupProgress', JSON.stringify(progress));
+  renderTracker();
+}
+
+function resetTracker() {
+  for (let key in progress) {
+    delete progress[key];
+  }
+  localStorage.setItem('pushupProgress', JSON.stringify(progress));
+  renderTracker();
+}
+
+renderTracker();
+
+ 
+</script>
+
+</body>
+</html>
