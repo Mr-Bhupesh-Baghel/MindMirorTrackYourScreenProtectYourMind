@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Water Intake Tracker</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #e0f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.tracker-container {
+  text-align: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.progress-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(#00bcd4 0%, #ddd 0%);
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+#intakeText {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buttons button:first-child {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.buttons button:last-child {
+  background-color: #ff5252;
+  color: white;
+}
+
+  </style>
+</head>
+<body>
+  <div class="tracker-container">
+    <h1>Daily Water Tracker</h1>
+    <div class="progress-circle" id="progressCircle">
+      <span id="progressText">0%</span>
+    </div>
+    <p id="intakeText">0 / 8 Glasses</p>
+    <div class="buttons">
+      <button onclick="addWater()">+ Add</button>
+      <button onclick="removeWater()">- Remove</button>
+    </div>
+  </div>
+
+  <script>
+    const MAX_GLASSES = 8;
+
+let waterIntake = 0;
+let lastSavedDate = localStorage.getItem('lastDate') || '';
+let today = new Date().toLocaleDateString();
+
+function resetIfNewDay() {
+  if (lastSavedDate !== today) {
+    waterIntake = 0;
+    localStorage.setItem('lastDate', today);
+    localStorage.setItem('intake', '0');
+  } else {
+    waterIntake = parseInt(localStorage.getItem('intake')) || 0;
+  }
+}
+
+function updateUI() {
+  let percent = (waterIntake / MAX_GLASSES) * 100;
+  document.getElementById("progressText").textContent = `${Math.round(percent)}%`;
+  document.getElementById("intakeText").textContent = `${waterIntake} / ${MAX_GLASSES} Glasses`;
+  document.getElementById("progressCircle").style.background = 
+    `conic-gradient(#00bcd4 ${percent}%, #ddd ${percent}%)`;
+}
+
+function addWater() {
+  if (waterIntake < MAX_GLASSES) {
+    waterIntake++;
+    localStorage.setItem('intake', waterIntake);
+    updateUI();
+  }
+}
+
+function removeWater() {
+  if (waterIntake > 0) {
+    waterIntake--;
+    localStorage.setItem('intake', waterIntake);
+    updateUI();
+  }
+}
+
+window.onload = () => {
+  resetIfNewDay();
+  updateUI();
+};
+
+  </script>
+</body>
+</html>
