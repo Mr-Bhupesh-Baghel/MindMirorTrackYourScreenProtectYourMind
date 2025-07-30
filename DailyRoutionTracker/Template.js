@@ -14,24 +14,22 @@ let storageKey = `daily-tasks-${today}`;
 // 🔹 Saare task IDs ko store karne ke liye array
 let allTasks = [];
 
-// 🔹 Completed task track karne ke liye (currently unused, future ke liye useful ho sakta hai)
+// 🔹 Completed task track karne ke liye (future use ke liye)
 let completed = new Set();
 
 
 // ✅ Function: loadTasks()
 // 🔹 Default aur Custom tasks ko page par dikhata hai
 function loadTasks() {
-  // 🔹 Purane tasks ko HTML se hata dete hain
   document.getElementById("taskContainer").innerHTML = '';
   allTasks = [];
 
-  // 🔹 Default tasks ko load karte hain
+  // 🔹 Default tasks dikhana
   for (let [section, tasks] of Object.entries(sections)) {
     const box = document.createElement("div");
     box.className = "task-group";
     box.innerHTML = `<h2>${section}</h2>`;
 
-    // 🔹 Har task ke liye checkbox banate hain
     tasks.forEach((task, index) => {
       const id = `${section}-${index}`;
       allTasks.push(id);
@@ -47,7 +45,7 @@ function loadTasks() {
     document.getElementById("taskContainer").appendChild(box);
   }
 
-  // 🔹 Custom tasks ko localStorage se read kar ke dikhate hain
+  // 🔹 Custom tasks load karna
   const custom = JSON.parse(localStorage.getItem("customTasks") || "[]");
 
   if (custom.length) {
@@ -78,21 +76,18 @@ function loadTasks() {
 function updateProgress() {
   let done = 0;
 
-  // 🔹 Har task ke checkbox ko check karke ginte hain ki kitne complete hue
   allTasks.forEach(id => {
     const box = document.getElementById(id);
     if (box?.checked) done++;
   });
 
-  // 🔹 Completion percentage calculate karte hain
   const percent = Math.round((done / allTasks.length) * 100);
 
-  // 🔹 Progress bar ko update karte hain
   const bar = document.getElementById("progress");
   bar.style.width = percent + "%";
   bar.textContent = percent + "%";
 
-  // 🔹 Status save karte hain localStorage mein
+  // 🔹 localStorage mein status save karna
   saveStatus();
 }
 
@@ -107,7 +102,6 @@ function saveStatus() {
     status[id] = box?.checked || false;
   });
 
-  // 🔹 Aaj ke din ke liye status save karte hain
   localStorage.setItem(storageKey, JSON.stringify(status));
 }
 
@@ -140,8 +134,8 @@ function addCustomTask() {
 
   input.value = '';
 
-  loadTasks();    // 🔄 UI reload
-  loadStatus();   // ✅ Checkbox status reload
+  loadTasks();
+  loadStatus();
 }
 
 
@@ -152,8 +146,8 @@ function removeCustomTask(index) {
   list.splice(index, 1);
   localStorage.setItem("customTasks", JSON.stringify(list));
 
-  loadTasks();    // 🔄 UI reload
-  loadStatus();   // ✅ Checkbox status reload
+  loadTasks();
+  loadStatus();
 }
 
 
@@ -176,32 +170,49 @@ function viewPrevious() {
 
 
 // ✅ Function: autoReset()
-// 🔹 Har raat 12 baje ke baad agar date change ho gayi to task status reset karta hai
+// 🔹 Raat 12 baje ke baad agar date badal gayi ho to naye din ke tasks load karega
 function autoReset() {
   const currentDate = new Date().toISOString().split('T')[0];
   const lastDate = localStorage.getItem("lastOpenedDate");
 
   if (lastDate !== currentDate) {
-    // 🔹 Nayi date update karte hain
     localStorage.setItem("lastOpenedDate", currentDate);
-
-    // 🔹 Purani date ka task progress delete karte hain
     localStorage.removeItem(`daily-tasks-${lastDate}`);
 
-    // 🔹 Storage key update karte hain naye date ke liye
     storageKey = `daily-tasks-${currentDate}`;
 
-    // 🔄 UI aur progress reset kar dete hain
     loadTasks();
     loadStatus();
   }
 }
 
 
-// ✅ Initialization: Page load par ye sab chalega
-autoReset();        // 🔁 Sabse pehle check karega date change to nahi hui
-loadTasks();        // 📋 Tasks show karega
-loadStatus();       // ✅ Checkbox status restore karega
+// ✅ ✅ ✅ Function: Submit button for "Next Day"
+// 🔹 Jab user "Submit" button par click kare to agla din load kare
+function submitAndNextDay() {
+  // 🔹 Pehle current task ka progress save karo
+  saveStatus();
 
-// 🔄 Har 1 minute mein check karega ki date change ho gayi ya nahi (12:00AM ka automatic reset)
+  // 🔹 Aaj ki date lo aur ek din aage badhao
+  const todayDate = new Date();
+  const tomorrowDate = new Date(todayDate);
+  tomorrowDate.setDate(todayDate.getDate() + 1);
+
+  // 🔹 New date ke hisaab se key banao
+  const tomorrow = tomorrowDate.toISOString().split('T')[0];
+  localStorage.setItem("lastOpenedDate", tomorrow);
+  storageKey = `daily-tasks-${tomorrow}`;
+
+  // 🔹 UI reload karke naye din ke tasks dikhao
+  loadTasks();
+  loadStatus();
+}
+
+
+// ✅ Page load par initialize karna
+autoReset();        // 🔁 Date change hui to reset kare
+loadTasks();        // 📋 Task list dikhaye
+loadStatus();       // ✅ Checkbox status wapas laaye
+
+// 🔄 Har 1 minute mein date auto check kare
 setInterval(autoReset, 60 * 1000);
