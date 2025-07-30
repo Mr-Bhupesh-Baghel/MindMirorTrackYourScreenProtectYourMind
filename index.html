@@ -10,57 +10,60 @@
 
 <body>
   <div class="container">
-    <h1>🧠 MindMirror</h1>
-    <p class="subtitle">Track your screen time. Protect your mind.</p>
+    <header>
+      <h1>🧠 MindMirror</h1>
+      <p class="subtitle">Track your screen time. Protect your mind.</p>
+    </header>
 
-    <div class="dashboard">
-
-      <div class="card">
+    <main class="dashboard">
+      <section class="card">
         <h2>Total Screen Time</h2>
         <p id="totalTime">0 hrs 0 mins</p>
-      </div>
+      </section>
 
-      <div class="card">
+      <section class="card">
         <h2>Daily Routine Tracker</h2>
         <div class="template-section">
-          <a href="DailyRoutionTracker/Template.html" class="template-button">Open</a>
+          <a href="DailyRoutionTracker/Template.html" class="template-button" aria-label="Open Daily Routine Template">Open</a>
         </div>
-      </div>
+      </section>
 
-      <div class="card">
+      <section class="card">
         <h2>Break Reminder</h2>
         <p>Next break in: <span id="breakTimer">30 mins</span></p>
-      </div>
+      </section>
 
-      <div class="card">
+      <section class="card">
         <h2>App Usage</h2>
-        <ul id="appUsage">
+        <div id="appUsage">
           <p>Coming soon...</p>
-        </ul>
-      </div>
+        </div>
+      </section>
 
-      <div class="card">
-        <h2>weekly Report</h2>
-        <p>Coming soon...</p>
-      </div>
-    </div>
-    <div class="how-to-use">
+      <section class="card calendar-card">
+        <h2>Calendar</h2>
+        <iframe
+          src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FKolkata"
+          style="border: 0; width: 200%; height: 500px;"
+          frameborder="0"
+          scrolling="no"
+          title="MindMirror Google Calendar">
+        </iframe>
+      </section>
+    </main>
+
+    <section class="how-to-use">
       <h3>How to Use It</h3>
-      <p>
-        Keep this website tab open. After that, whenever you visit any other website, the tracking will remain active
-        and working.
-      </p>
+      <p>Keep this website tab open. It will keep tracking even when you switch to other websites.</p>
 
       <h3>इसका इस्तेमाल कैसे करें</h3>
-      <p>
-        जब तक आप इस वेबसाइट का टैब खुला रखेंगे, उसके बाद आप किसी भी वेबसाइट पर जाएँगे, तभी यह ट्रैकिंग कार्य करेगी।
-      </p>
+      <p>जब तक आप इस वेबसाइट का टैब खुला रखेंगे, यह ट्रैकिंग काम करती रहेगी, चाहे आप किसी भी वेबसाइट पर जाएं।</p>
 
-      <p class="tagline">
-        <strong>Track Your Screen — Protect Your Mind 😊</strong>
-      </p>
-    </div>
-    <script src="TimeTracking/script.js"></script>
+      <p class="tagline"><strong>Track Your Screen — Protect Your Mind 😊</strong></p>
+    </section>
+  </div>
+
+  <script src="TimeTracking/script.js"></script>
 </body>
 
 </html>
