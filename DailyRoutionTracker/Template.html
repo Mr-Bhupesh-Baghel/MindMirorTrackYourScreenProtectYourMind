@@ -32,6 +32,26 @@
   <div class="task-group">
     <button onclick="viewPrevious()">📅 View Previous Work</button>
   </div>
+  <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
+
+<script>
+  function deleteSpecificData() {
+    // Saari localStorage keys check karenge
+    for (let key in localStorage) {
+      // Sirf wahi keys delete karenge jo "daily-tasks-" se start hoti hain
+      if (key.startsWith("daily-tasks-")) {
+        localStorage.removeItem(key);
+      }
+    }
+
+    // Progress key bhi delete karenge
+    localStorage.removeItem("progress");
+
+    alert("✅ Saari progress aur daily-tasks data delete kar di gayi hai.");
+  }
+</script>
+
+
 <script src="Template.js"></script>
 <script src="pushup.js"></script>
 </body>
