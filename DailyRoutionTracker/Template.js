@@ -216,3 +216,4 @@ loadStatus();       // ✅ Checkbox status wapas laaye
 
 // 🔄 Har 1 minute mein date auto check kare
 setInterval(autoReset, 60 * 1000);
+

@@ -74,31 +74,3 @@ h1 {
 .template-button:hover {
   background-color: #0047b3;
 }
-/*How to use*/
-.how-to-use {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 600px;
-  margin: 20px auto;
-  font-family: 'Segoe UI', sans-serif;
-  color: #333;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  text-align: center;
-}
-
-.how-to-use h3 {
-  margin-top: 15px;
-  color: #003e7f;
-}
-
-.how-to-use p {
-  margin: 10px 0;
-  line-height: 1.6;
-}
-
-.tagline {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  color: #169a35;
-}
