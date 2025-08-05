@@ -1,57 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Daily Routine Tracker</title>
-  <link rel="stylesheet" href="Template.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Track your daily routines, habits, and progress with ease." />
+  <title>🌄 Daily Routine Tracker</title>
+  <link rel="stylesheet" href="Template.css" />
 </head>
 <body>
 
-  <h1>🌄 Daily Routine Tracker</h1>
-  <div class="progress-bar"><div id="progress" class="progress">0%</div></div>
+  <header>
+    <h1>🌄 Daily Routine Tracker</h1>
+    <div class="progress-bar">
+      <div id="progress" class="progress">0%</div>
+    </div>
+  </header>
 
+  <main>
+    <!-- Task Display Area -->
+    <div id="taskContainer"></div>
 
-  <div id="taskContainer"></div>
-<section>
-  <button onclick="submitAndNextDay()">📤 Submit Your Work / Next Day</button>
+    <!-- Submit Button -->
+    <section>
+      <button onclick="submitAndNextDay()">📤 Submit Your Work / Next Day</button>
+    </section>
 
-</section>
-<div class="H">
-<iframe src="pushup.html" width="60%" height="500" style="border:none;"></iframe>
-<iframe src="whater.html" width="40%" height="500" style="border:none;"></iframe>
-</div>
+    <!-- Embedded Habit Sections -->
+    <section class="H">
+      <iframe src="pushup.html" width="60%" height="500" style="border:none;" title="Pushups Tracker"></iframe>
+      <iframe src="whater.html" width="40%" height="500" style="border:none;" title="Water Tracker"></iframe>
+    </section>
 
+    <!-- Add Custom Task -->
+    <div class="add-task task-group">
+      <h3>Add Daily Custom Task</h3>
+      <input type="text" id="customTaskInput" placeholder="Enter your task" />
+      <button onclick="addCustomTask()">Add</button>
+    </div>
 
-  <div class="add-task task-group">
-    <h3>Add Daily Custom Task</h3>
-    <input type="text" id="customTaskInput" placeholder="Enter your task">
-    <button onclick="addCustomTask()">Add</button>
-  </div>
-  
+    <!-- View Past Work -->
+    <div class="task-group">
+      <button onclick="viewPrevious()">📅 View Previous Work</button>
+    </div>
 
-  <div class="task-group">
-    <button onclick="viewPrevious()">📅 View Previous Work</button>
-  </div>
+    <!-- Delete All Progress -->
+    <div class="task-group">
+      <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
+    </div>
+  </main>
 
-  <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
- 
-<script>
-  function deleteSpecificData() {
-    // Saari localStorage keys check karenge
-    for (let key in localStorage) {
-      // Sirf wahi keys delete karenge jo "daily-tasks-" se start hoti hain
-      if (key.startsWith("daily-tasks-")) {
-        localStorage.removeItem(key);
+  <!-- Script Section -->
+  <script>
+    function deleteSpecificData() {
+      for (let key in localStorage) {
+        if (key.startsWith("daily-tasks-")) {
+          localStorage.removeItem(key);
+        }
       }
+      localStorage.removeItem("progress");
+      alert("✅ All progress and daily task data have been deleted.");
     }
+  </script>
 
-    // Progress key bhi delete karenge
-    localStorage.removeItem("progress");
+  <!-- External Scripts -->
+  <script src="Template.js"></script>
+  <script src="pushup.js"></script>
 
-    alert("✅ Saari progress aur daily-tasks data delete kar di gayi hai.");
-  }
-</script>
-<script src="Template.js"></script>
-<script src="pushup.js"></script>
 </body>
 </html>

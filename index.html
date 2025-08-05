@@ -4,26 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MindMirror - Track your screen time and daily habits for a healthier digital lifestyle." />
+  <meta name="author" content="Your Name or Team" />
   <title>MindMirror - Screen Time Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<header>
-</header>
+
 <body>
   <div class="container">
     <header>
-        <img src="Logo.png" height="300"  alt="MindMirror Logo" class="logo" />
-
+      <img src="Logo.png" height="300" alt="MindMirror Logo" class="logo" />
       <h1>🧠 MindMirror</h1>
       <p class="subtitle">Track your screen time. Protect your mind.</p>
     </header>
-<iframe src="DailyRoutionTracker/Template.html" width="100%" height="110" style="border:none;"></iframe>
+
+    <!-- Daily Routine Top Bar -->
+    <section class="card">
+      <iframe src="DailyRoutionTracker/Template.html" width="100%" height="110" style="border:none;" title="Daily Routine Top Bar"></iframe>
+    </section>
+
     <main class="dashboard">
+      <!-- Total Screen Time -->
       <section class="card">
         <h2>Total Screen Time</h2>
         <p id="totalTime">0 hrs 0 mins</p>
       </section>
 
+      <!-- Daily Routine Template -->
       <section class="card">
         <h2>Daily Routine Tracker</h2>
         <div class="template-section">
@@ -31,27 +38,42 @@
         </div>
       </section>
 
+      <!-- App Usage (Coming Soon) -->
       <section class="card">
         <h2>App Usage</h2>
         <div id="appUsage">
           <p>Coming soon...</p>
         </div>
       </section>
-<div>
-<iframe src="DailyRoutionTracker/pushup.html" width="100%" height="500" style="border:none;"></iframe>
-<iframe src="DailyRoutionTracker/whater.html" width="100%" height="500" style="border:none;"></iframe>
-</div>
+
+      <!-- Pushup Tracker -->
+      <section class="card">
+        <h2>Pushup Tracker</h2>
+        <iframe src="DailyRoutionTracker/pushup.html" width="100%" height="500" style="border:none;" title="Pushup Tracker"></iframe>
+      </section>
+
+      <!-- Water Intake Tracker -->
+      <section class="card">
+        <h2>Water Tracker</h2>
+        <iframe src="DailyRoutionTracker/whater.html" width="100%" height="500" style="border:none;" title="Water Tracker"></iframe>
+      </section>
+
+      <!-- Google Calendar -->
       <section class="card calendar-card">
         <h2>Calendar</h2>
         <iframe
           src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FKolkata"
-          style="border: 0; width: 150%; height: 500px;"
-          frameborder="0"
-          scrolling="no"
+          style="border: 0; width: 100%; height: 500px;" frameborder="0" scrolling="no"
           title="MindMirror Google Calendar">
         </iframe>
       </section>
     </main>
+
+    <!-- Optional footer -->
+    <footer style="text-align:center; margin-top: 40px; color: #666;">
+      <p>© 2025 MindMirror. All rights reserved.</p>
+    </footer>
+  </div>
 
   <script src="TimeTracking/script.js"></script>
 </body>
