@@ -21,28 +21,39 @@ let completed = new Set();
 // ✅ Function: loadTasks()
 // 🔹 Default aur Custom tasks ko page par dikhata hai
 function loadTasks() {
-  document.getElementById("taskContainer").innerHTML = '';
+  const container = document.getElementById("taskContainer");
+  container.innerHTML = '';
   allTasks = [];
 
   // 🔹 Default tasks dikhana
   for (let [section, tasks] of Object.entries(sections)) {
     const box = document.createElement("div");
     box.className = "task-group";
-    box.innerHTML = `<h2>${section}</h2>`;
+    const heading = document.createElement("h2");
+    heading.textContent = section;
+    box.appendChild(heading);
 
     tasks.forEach((task, index) => {
       const id = `${section}-${index}`;
       allTasks.push(id);
 
-      box.innerHTML += `
-        <label class="task-item">
-          <span>${task}</span>
-          <input type="checkbox" id="${id}" onchange="updateProgress()">
-        </label>
-      `;
+      const label = document.createElement("label");
+      label.className = "task-item";
+
+      const span = document.createElement("span");
+      span.textContent = task;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = id;
+      checkbox.onchange = updateProgress;
+
+      label.appendChild(span);
+      label.appendChild(checkbox);
+      box.appendChild(label);
     });
 
-    document.getElementById("taskContainer").appendChild(box);
+    container.appendChild(box);
   }
 
   // 🔹 Custom tasks load karna
@@ -51,22 +62,37 @@ function loadTasks() {
   if (custom.length) {
     const customBox = document.createElement("div");
     customBox.className = "task-group";
-    customBox.innerHTML = `<h2>📝 Custom Tasks</h2>`;
+    const heading = document.createElement("h2");
+    heading.textContent = "📝 Custom Tasks";
+    customBox.appendChild(heading);
 
     custom.forEach((task, index) => {
       const id = `custom-${index}`;
       allTasks.push(id);
 
-      customBox.innerHTML += `
-        <label class="task-item">
-          <span>${task}</span>
-          <input type="checkbox" id="${id}" onchange="updateProgress()">
-          <button onclick="removeCustomTask(${index})">❌</button>
-        </label>
-      `;
+      const label = document.createElement("label");
+      label.className = "task-item";
+
+      const span = document.createElement("span");
+      span.textContent = task;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.id = id;
+      checkbox.onchange = updateProgress;
+
+      const button = document.createElement("button");
+      button.textContent = "❌";
+      button.onclick = () => removeCustomTask(index);
+
+      label.appendChild(span);
+      label.appendChild(checkbox);
+      label.appendChild(button);
+
+      customBox.appendChild(label);
     });
 
-    document.getElementById("taskContainer").appendChild(customBox);
+    container.appendChild(customBox);
   }
 }
 
@@ -81,7 +107,7 @@ function updateProgress() {
     if (box?.checked) done++;
   });
 
-  const percent = Math.round((done / allTasks.length) * 100);
+  const percent = allTasks.length === 0 ? 0 : Math.round((done / allTasks.length) * 100);
 
   const bar = document.getElementById("progress");
   bar.style.width = percent + "%";
@@ -129,13 +155,20 @@ function addCustomTask() {
   if (!task) return;
 
   const list = JSON.parse(localStorage.getItem("customTasks") || "[]");
+
+  if (list.includes(task)) {
+    alert("⚠️ This task already exists.");
+    return;
+  }
+
   list.push(task);
   localStorage.setItem("customTasks", JSON.stringify(list));
 
   input.value = '';
 
-  loadTasks();
-  loadStatus();
+  saveStatus();  // Save current status
+  loadTasks();   // Reload UI
+  loadStatus();  // Reapply previous status
 }
 
 
@@ -146,6 +179,7 @@ function removeCustomTask(index) {
   list.splice(index, 1);
   localStorage.setItem("customTasks", JSON.stringify(list));
 
+  saveStatus();
   loadTasks();
   loadStatus();
 }
@@ -161,7 +195,7 @@ function viewPrevious() {
     const data = JSON.parse(localStorage.getItem(k));
     const completed = Object.values(data).filter(x => x).length;
     const total = Object.keys(data).length;
-    const percent = Math.round((completed / total) * 100);
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
     return `${date} – ${percent}% completed`;
   }).join("\n");
 
@@ -176,9 +210,13 @@ function autoReset() {
   const lastDate = localStorage.getItem("lastOpenedDate");
 
   if (lastDate !== currentDate) {
-    localStorage.setItem("lastOpenedDate", currentDate);
-    localStorage.removeItem(`daily-tasks-${lastDate}`);
+    // 🔸 Remove only yesterday’s data (not today's by mistake)
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    localStorage.removeItem(`daily-tasks-${yesterdayStr}`);
 
+    localStorage.setItem("lastOpenedDate", currentDate);
     storageKey = `daily-tasks-${currentDate}`;
 
     loadTasks();
@@ -187,23 +225,19 @@ function autoReset() {
 }
 
 
-// ✅ ✅ ✅ Function: Submit button for "Next Day"
+// ✅ Function: Submit button for "Next Day"
 // 🔹 Jab user "Submit" button par click kare to agla din load kare
 function submitAndNextDay() {
-  // 🔹 Pehle current task ka progress save karo
   saveStatus();
 
-  // 🔹 Aaj ki date lo aur ek din aage badhao
   const todayDate = new Date();
   const tomorrowDate = new Date(todayDate);
   tomorrowDate.setDate(todayDate.getDate() + 1);
 
-  // 🔹 New date ke hisaab se key banao
   const tomorrow = tomorrowDate.toISOString().split('T')[0];
   localStorage.setItem("lastOpenedDate", tomorrow);
   storageKey = `daily-tasks-${tomorrow}`;
 
-  // 🔹 UI reload karke naye din ke tasks dikhao
   loadTasks();
   loadStatus();
 }
@@ -216,4 +250,3 @@ loadStatus();       // ✅ Checkbox status wapas laaye
 
 // 🔄 Har 1 minute mein date auto check kare
 setInterval(autoReset, 60 * 1000);
-
