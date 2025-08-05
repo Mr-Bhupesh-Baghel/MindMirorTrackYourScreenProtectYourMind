@@ -81,13 +81,28 @@ function loadTasks() {
       checkbox.id = id;
       checkbox.onchange = updateProgress;
 
-      const button = document.createElement("button");
-      button.textContent = "❌";
-      button.onclick = () => removeCustomTask(index);
+      // ❌ Delete button
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "❌";
+      deleteBtn.onclick = () => removeCustomTask(index);
+
+      // 🔼 Move Up button
+      const upBtn = document.createElement("button");
+      upBtn.textContent = "🔼";
+      upBtn.onclick = () => moveCustomTask(index, -1);
+      upBtn.disabled = index === 0;
+
+      // 🔽 Move Down button
+      const downBtn = document.createElement("button");
+      downBtn.textContent = "🔽";
+      downBtn.onclick = () => moveCustomTask(index, 1);
+      downBtn.disabled = index === custom.length - 1;
 
       label.appendChild(span);
       label.appendChild(checkbox);
-      label.appendChild(button);
+      label.appendChild(deleteBtn);
+      label.appendChild(upBtn);
+      label.appendChild(downBtn);
 
       customBox.appendChild(label);
     });
@@ -166,9 +181,9 @@ function addCustomTask() {
 
   input.value = '';
 
-  saveStatus();  // Save current status
-  loadTasks();   // Reload UI
-  loadStatus();  // Reapply previous status
+  saveStatus();
+  loadTasks();
+  loadStatus();
 }
 
 
@@ -177,6 +192,24 @@ function addCustomTask() {
 function removeCustomTask(index) {
   const list = JSON.parse(localStorage.getItem("customTasks") || "[]");
   list.splice(index, 1);
+  localStorage.setItem("customTasks", JSON.stringify(list));
+
+  saveStatus();
+  loadTasks();
+  loadStatus();
+}
+
+
+// ✅ Function: moveCustomTask(index, direction)
+// 🔹 Custom task ko upar ya neeche move karta hai
+function moveCustomTask(index, direction) {
+  const list = JSON.parse(localStorage.getItem("customTasks") || "[]");
+  const newIndex = index + direction;
+
+  if (newIndex < 0 || newIndex >= list.length) return;
+
+  // 🔁 Swap the tasks
+  [list[index], list[newIndex]] = [list[newIndex], list[index]];
   localStorage.setItem("customTasks", JSON.stringify(list));
 
   saveStatus();
@@ -210,7 +243,6 @@ function autoReset() {
   const lastDate = localStorage.getItem("lastOpenedDate");
 
   if (lastDate !== currentDate) {
-    // 🔸 Remove only yesterday’s data (not today's by mistake)
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().split('T')[0];
@@ -225,7 +257,7 @@ function autoReset() {
 }
 
 
-// ✅ Function: Submit button for "Next Day"
+// ✅ Function: submitAndNextDay()
 // 🔹 Jab user "Submit" button par click kare to agla din load kare
 function submitAndNextDay() {
   saveStatus();
