@@ -1,31 +1,22 @@
-// 🔹 Default section define kar rahe hain jisme ek task diya gaya hai
+// 🔹 Default section define kar rahe hain jisme ek task diya gaya hai 
 const sections = {
   "🛠️ Start Work": [
     "🔹Do Any Work For At Least 10 Minutes"
   ]
 };
 
-// 🔹 Aaj ki date ko YYYY-MM-DD format mein le rahe hain
 const today = new Date().toISOString().split('T')[0];
-
-// 🔹 Aaj ki date ke saath ek storage key bana rahe hain jisme task status store hoga
 let storageKey = `daily-tasks-${today}`;
-
-// 🔹 Saare task IDs ko store karne ke liye array
 let allTasks = [];
-
-// 🔹 Completed task track karne ke liye (future use ke liye)
 let completed = new Set();
 
-
-// ✅ Function: loadTasks()
-// 🔹 Default aur Custom tasks ko page par dikhata hai
+// ✅ Load tasks
 function loadTasks() {
   const container = document.getElementById("taskContainer");
   container.innerHTML = '';
   allTasks = [];
 
-  // 🔹 Default tasks dikhana
+  // Default tasks
   for (let [section, tasks] of Object.entries(sections)) {
     const box = document.createElement("div");
     box.className = "task-group";
@@ -56,7 +47,7 @@ function loadTasks() {
     container.appendChild(box);
   }
 
-  // 🔹 Custom tasks load karna
+  // Custom tasks
   const custom = JSON.parse(localStorage.getItem("customTasks") || "[]");
 
   if (custom.length) {
@@ -81,18 +72,15 @@ function loadTasks() {
       checkbox.id = id;
       checkbox.onchange = updateProgress;
 
-      // ❌ Delete button
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "❌";
       deleteBtn.onclick = () => removeCustomTask(index);
 
-      // 🔼 Move Up button
       const upBtn = document.createElement("button");
       upBtn.textContent = "🔼";
       upBtn.onclick = () => moveCustomTask(index, -1);
       upBtn.disabled = index === 0;
 
-      // 🔽 Move Down button
       const downBtn = document.createElement("button");
       downBtn.textContent = "🔽";
       downBtn.onclick = () => moveCustomTask(index, 1);
@@ -111,9 +99,7 @@ function loadTasks() {
   }
 }
 
-
-// ✅ Function: updateProgress()
-// 🔹 Kitne task complete hue uska percentage calculate karta hai
+// ✅ Update progress
 function updateProgress() {
   let done = 0;
 
@@ -128,13 +114,10 @@ function updateProgress() {
   bar.style.width = percent + "%";
   bar.textContent = percent + "%";
 
-  // 🔹 localStorage mein status save karna
   saveStatus();
 }
 
-
-// ✅ Function: saveStatus()
-// 🔹 Saare checkbox ke status ko localStorage mein save karta hai
+// ✅ Save status
 function saveStatus() {
   const status = {};
 
@@ -146,9 +129,7 @@ function saveStatus() {
   localStorage.setItem(storageKey, JSON.stringify(status));
 }
 
-
-// ✅ Function: loadStatus()
-// 🔹 localStorage se saved checkbox status ko load karta hai
+// ✅ Load status
 function loadStatus() {
   const data = JSON.parse(localStorage.getItem(storageKey) || "{}");
 
@@ -160,9 +141,7 @@ function loadStatus() {
   updateProgress();
 }
 
-
-// ✅ Function: addCustomTask()
-// 🔹 Naye custom task ko add karta hai
+// ✅ Add custom task
 function addCustomTask() {
   const input = document.getElementById("customTaskInput");
   const task = input.value.trim();
@@ -186,9 +165,7 @@ function addCustomTask() {
   loadStatus();
 }
 
-
-// ✅ Function: removeCustomTask(index)
-// 🔹 Custom task ko delete karta hai
+// ✅ Remove custom task
 function removeCustomTask(index) {
   const list = JSON.parse(localStorage.getItem("customTasks") || "[]");
   list.splice(index, 1);
@@ -199,16 +176,13 @@ function removeCustomTask(index) {
   loadStatus();
 }
 
-
-// ✅ Function: moveCustomTask(index, direction)
-// 🔹 Custom task ko upar ya neeche move karta hai
+// ✅ Move custom task
 function moveCustomTask(index, direction) {
   const list = JSON.parse(localStorage.getItem("customTasks") || "[]");
   const newIndex = index + direction;
 
   if (newIndex < 0 || newIndex >= list.length) return;
 
-  // 🔁 Swap the tasks
   [list[index], list[newIndex]] = [list[newIndex], list[index]];
   localStorage.setItem("customTasks", JSON.stringify(list));
 
@@ -217,9 +191,7 @@ function moveCustomTask(index, direction) {
   loadStatus();
 }
 
-
-// ✅ Function: viewPrevious()
-// 🔹 Pichhle dino ki task performance dikhata hai
+// ✅ View previous days
 function viewPrevious() {
   const keys = Object.keys(localStorage).filter(k => k.startsWith("daily-tasks-"));
 
@@ -235,9 +207,7 @@ function viewPrevious() {
   alert("📅 Previous Progress:\n\n" + log);
 }
 
-
-// ✅ Function: autoReset()
-// 🔹 Raat 12 baje ke baad agar date badal gayi ho to naye din ke tasks load karega
+// ✅ Auto reset
 function autoReset() {
   const currentDate = new Date().toISOString().split('T')[0];
   const lastDate = localStorage.getItem("lastOpenedDate");
@@ -256,9 +226,7 @@ function autoReset() {
   }
 }
 
-
-// ✅ Function: submitAndNextDay()
-// 🔹 Jab user "Submit" button par click kare to agla din load kare
+// ✅ Submit and go to next day
 function submitAndNextDay() {
   saveStatus();
 
@@ -274,11 +242,28 @@ function submitAndNextDay() {
   loadStatus();
 }
 
+// ✅ Export to Excel
+function exportToExcel() {
+  const keys = Object.keys(localStorage).filter(k => k.startsWith("daily-tasks-"));
+  const data = [["Date", "Completed (%)"]];
 
-// ✅ Page load par initialize karna
-autoReset();        // 🔁 Date change hui to reset kare
-loadTasks();        // 📋 Task list dikhaye
-loadStatus();       // ✅ Checkbox status wapas laaye
+  keys.forEach(k => {
+    const date = k.split("daily-tasks-")[1];
+    const savedData = JSON.parse(localStorage.getItem(k) || "{}");
+    const completed = Object.values(savedData).filter(x => x).length;
+    const total = Object.keys(savedData).length;
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+    data.push([date, percent]);
+  });
 
-// 🔄 Har 1 minute mein date auto check kare
+  const worksheet = XLSX.utils.aoa_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Performance");
+  XLSX.writeFile(workbook, "Performance.xlsx");
+}
+
+// ✅ Init
+autoReset();
+loadTasks();
+loadStatus();
 setInterval(autoReset, 60 * 1000);
