@@ -188,21 +188,94 @@ function moveCustomTask(index, direction) {
   loadStatus();
 }
 
-// ✅ View previous days
+// ✅ View previous days in a modal table
 function viewPrevious() {
-  const keys = Object.keys(localStorage).filter(k => k.startsWith("daily-tasks-"));
+  // Get all keys that store daily tasks
+  const keys = Object.keys(localStorage)
+    .filter(k => k.startsWith("daily-tasks-"))
+    .sort((a, b) => new Date(b.split("daily-tasks-")[1]) - new Date(a.split("daily-tasks-")[1]));
 
-  const log = keys.map(k => {
+  // Create modal container if it doesn't exist
+  let modal = document.getElementById("previousModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "previousModal";
+    modal.style.cssText = `
+      display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.5); padding-top:80px; z-index:9999;
+    `;
+    modal.innerHTML = `
+      <div style="background:white; margin:auto; padding:20px; border-radius:8px; width:80%; max-width:500px;">
+        <h3>📅 Previous Progress</h3>
+        <table id="previousTable" style="width:100%; border-collapse:collapse; margin-top:10px;">
+          <tr>
+            <th style="border-bottom:1px solid #ccc; padding:8px;">Date</th>
+            <th style="border-bottom:1px solid #ccc; padding:8px;">Completion</th>
+            <th style="border-bottom:1px solid #ccc; padding:8px;">Action</th>
+          </tr>
+        </table>
+        <button id="closePrevious" style="margin-top:10px; padding:6px 10px; background:#dc3545; color:white; border:none; border-radius:4px; cursor:pointer;">Close</button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Close modal
+    document.getElementById("closePrevious").onclick = () => {
+      modal.style.display = "none";
+    };
+  }
+
+  const table = document.getElementById("previousTable");
+
+  // Clear old rows (except header)
+  table.innerHTML = `
+    <tr>
+      <th style="border-bottom:1px solid #ccc; padding:8px;">Date</th>
+      <th style="border-bottom:1px solid #ccc; padding:8px;">Completion</th>
+      <th style="border-bottom:1px solid #ccc; padding:8px;">Action</th>
+    </tr>
+  `;
+
+  // Add rows
+  keys.forEach(k => {
     const date = k.split("daily-tasks-")[1];
     const data = JSON.parse(localStorage.getItem(k));
     const completed = Object.values(data).filter(x => x).length;
     const total = Object.keys(data).length;
     const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
-    return `${date} – ${percent}% completed`;
-  }).join("\n");
 
-  alert("📅 Previous Progress:\n\n" + log);
+    // Color for percentage
+    let color = "#6c757d";
+    if (percent >= 80) color = "#28a745";
+    else if (percent >= 50) color = "#ffc107";
+    else color = "#dc3545";
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td style="padding:8px; border-bottom:1px solid #eee;">${date}</td>
+      <td style="padding:8px; border-bottom:1px solid #eee; color:${color}; font-weight:bold;">${percent}%</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <button class="deletePrev" data-key="${k}" style="background:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">❌ Delete</button>
+      </td>
+    `;
+    table.appendChild(row);
+  });
+
+  // Attach delete events
+  table.querySelectorAll(".deletePrev").forEach(btn => {
+    btn.onclick = () => {
+      const key = btn.getAttribute("data-key");
+      if (confirm(`Delete progress for ${key.split("daily-tasks-")[1]}?`)) {
+        localStorage.removeItem(key);
+        btn.closest("tr").remove();
+      }
+    };
+  });
+
+  // Show modal
+  modal.style.display = "block";
 }
+
 
 // ✅ Auto reset
 function autoReset() {
