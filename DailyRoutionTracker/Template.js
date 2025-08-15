@@ -1,14 +1,14 @@
-// 🔹 Default section define kar rahe hain jisme ek task diya gaya hai 
+// 🔹 Default section define kar rahe hain jisme ek task diya gaya hai  
 const sections = {
-  "🛠️ Start Work": [
-    "🔹Do Any Work For At Least 10 Minutes"
+  "🛠️ Start ": [
+    "🔹Do Any Work For At Least 10 Minutes",
+    "🔹Breathe 🫁 Focus 👀 (What is necessary now) Attack"
   ]
 };
 
-const today = new Date().toISOString().split('T')[0];
+let today = new Date().toISOString().split('T')[0];
 let storageKey = `daily-tasks-${today}`;
 let allTasks = [];
-let completed = new Set();
 
 // ✅ Load tasks
 function loadTasks() {
@@ -160,7 +160,6 @@ function addCustomTask() {
 
   input.value = '';
 
-  saveStatus();
   loadTasks();
   loadStatus();
 }
@@ -171,7 +170,6 @@ function removeCustomTask(index) {
   list.splice(index, 1);
   localStorage.setItem("customTasks", JSON.stringify(list));
 
-  saveStatus();
   loadTasks();
   loadStatus();
 }
@@ -186,7 +184,6 @@ function moveCustomTask(index, direction) {
   [list[index], list[newIndex]] = [list[newIndex], list[index]];
   localStorage.setItem("customTasks", JSON.stringify(list));
 
-  saveStatus();
   loadTasks();
   loadStatus();
 }
@@ -213,14 +210,8 @@ function autoReset() {
   const lastDate = localStorage.getItem("lastOpenedDate");
 
   if (lastDate !== currentDate) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
-    localStorage.removeItem(`daily-tasks-${yesterdayStr}`);
-
     localStorage.setItem("lastOpenedDate", currentDate);
     storageKey = `daily-tasks-${currentDate}`;
-
     loadTasks();
     loadStatus();
   }
