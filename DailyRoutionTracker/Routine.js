@@ -187,6 +187,16 @@ function moveCustomTask(index, direction) {
   loadTasks();
   loadStatus();
 }
+// ✅ All progress and daily task data have been deleted function
+ function deleteSpecificData() {
+      for (let key in localStorage) {
+        if (key.startsWith("daily-tasks-")) {
+          localStorage.removeItem(key);
+        }
+      }
+      localStorage.removeItem("progress");
+      alert("✅ All progress and daily task data have been deleted.");
+    }
 
 // ✅ View previous days in a modal table
 function viewPrevious() {
