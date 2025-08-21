@@ -22,31 +22,36 @@
   <main>
     <!-- Task Display Area -->
     <div id="taskContainer"></div>
-
+    <div id="HtaskContainer"></div>
     <!-- Submit Button -->
     <section>
       <button onclick="submitAndNextDay()">📤 Submit Your Work / Next Day</button>
     </section>
 
-    
 
-    <!-- Add Custom Task -->
+
+
+    <!-- Add Custom and Holiday Task -->
     <div class="add-task task-group">
       <h3>Add Daily Custom Task</h3>
       <input type="text" id="customTaskInput" placeholder="Enter your task" />
       <button onclick="addCustomTask()">➕ Add</button>
+      <h3>Add Holiday Task</h3>
+      <input type="text" id="HolidayTaskInput" placeholder="New task">
+      <button onclick="addHolidayTask()">➕ Add </button>
+
       <!-- View Past Work,Download, Delete All Progress-->
-    <div class="task-group">
-      <button onclick="viewPrevious()">📅 View Previous Work</button>
-      <button onclick="exportToExcel()">📥 Download Excel</button>
-       <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
-    </div>
+      <div class="task-group">
+        <button onclick="viewPrevious()">📅 View Previous Work</button>
+        <button onclick="exportToExcel()">📥 Download Excel</button>
+        <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
+      </div>
 
     </div>
 
 
-    
- <!-- Embedded Habit Sections -->
+
+    <!-- Embedded Habit Sections -->
     <section class="H">
       <iframe src="pushup.html" width="60%" height="500" style="border:none;" title="Pushups Tracker"></iframe>
       <iframe src="whater.html" width="40%" height="500" style="border:none;" title="Water Tracker"></iframe>
@@ -56,6 +61,7 @@
   <!-- External Scripts -->
   <script src="Routine.js"></script>
   <script src="pushup.js"></script>
+  <script src="HolidayTask.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 </body>
