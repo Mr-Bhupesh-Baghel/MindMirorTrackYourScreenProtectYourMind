@@ -7,7 +7,7 @@
   <meta name="description"
     content="MindMirror - Track your screen time and daily habits for a healthier digital lifestyle." />
   <meta name="author" content="Your Name or Team" />
-  <title>MindMirror - Screen Time Tracker</title>
+  <title>MindMirror</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -19,71 +19,52 @@
       <p class="subtitle">Track your screen time. Protect your mind.</p>
     </header>
 
+ 
     <!-- Daily Routine Top Bar -->
     <section class="card">
-      <iframe src="DailyRoutionTracker/Routine.html" width="100%" height="110" style="border:none;"
+      <iframe src="Routine.html" width="100%" height="110" style="border:none;"
         title="Daily Routine Top Bar"></iframe>
     </section>
+    <!-- Daily Routine Template -->
+  <section class="card">
+    <h2>Daily Routine Tracker</h2>
+    <div class="template-section">
+      <a href="Routine.html" class="template-button"
+        aria-label="Open Daily Routine Template">Open</a>
+    </div>
+  </section>
 
     <main class="dashboard">
-      <!-- Total Screen Time -->
-      <section class="card">
-     <h2>Today's Screen Time</h2>
-  <div id="totalTime">00:00:00</div>
-  <button id="viewHistory">📅 View History</button>
+  <!-- Total Screen Time -->
+  <section class="card">
+    <h2>Total Screen Time</h2>
+    <iframe src="Time.html" class="frame" title="Total Screen Time"></iframe>
+  </section>
 
-  <!-- History Modal -->
-  <div id="historyModal" class="modal">
-    <div class="modal-content">
-      <h3>Screen Time History</h3>
-      <table id="historyTable"></table>
-      <button id="closeModal">Close</button>
-    </div>
-  </div>
 
-      </section>
+  <!-- Pushup Tracker -->
+  <section class="card">
+    <h2>Pushup Tracker</h2>
+    <iframe src="pushup.html" class="frame" title="Pushup Tracker"></iframe>
+  </section>
 
-      <!-- Daily Routine Template -->
-      <section class="card">
-        <h2>Daily Routine Tracker</h2>
-        <div class="template-section">
-          <a href="DailyRoutionTracker/Routine.html" class="template-button"
-            aria-label="Open Daily Routine Template">Open</a>
-        </div>
-      </section>
+  <!-- Water Intake Tracker -->
+  <section class="card">
+    <h2>Water Tracker</h2>
+    <iframe src="whater.html" class="frame" title="Water Tracker"></iframe>
+  </section>
 
-      <!-- App Usage (Coming Soon) -->
-      <section class="card">
-        <h2>App Usage</h2>
-        <div id="appUsage">
-          <p>Coming soon...</p>
-        </div>
-      </section>
+  <!-- Google Calendar -->
+  <section class="card calendar-card">
+    <h2>Calendar</h2>
+    <iframe
+      src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FKolkata"
+      class="frame"
+      title="MindMirror Google Calendar">
+    </iframe>
+  </section>
+</main>
 
-      <!-- Pushup Tracker -->
-      <section class="card">
-        <h2>Pushup Tracker</h2>
-        <iframe src="DailyRoutionTracker/pushup.html" width="100%" height="500" style="border:none;"
-          title="Pushup Tracker"></iframe>
-      </section>
-
-      <!-- Water Intake Tracker -->
-      <section class="card">
-        <h2>Water Tracker</h2>
-        <iframe src="DailyRoutionTracker/whater.html" width="100%" height="500" style="border:none;"
-          title="Water Tracker"></iframe>
-      </section>
-
-      <!-- Google Calendar -->
-      <section class="card calendar-card">
-        <h2>Calendar</h2>
-        <iframe
-          src="https://calendar.google.com/calendar/embed?src=your_calendar_id%40group.calendar.google.com&ctz=Asia%2FKolkata"
-          style="border: 0; width: 100%; height: 500px;" frameborder="0" scrolling="no"
-          title="MindMirror Google Calendar">
-        </iframe>
-      </section>
-    </main>
 <section class="card">
         <div>
           <a href="Feedback.html" class="template-button"
@@ -97,7 +78,9 @@
     </footer>
   </div>
 
-  <script src="TimeTracking/Time.js"></script>
+ <!-- Tracker (pass name too, either here OR body[data-page]) -->
+  <script src="page-tracker.js" data-page="Home"></script>
+
 </body>
 
 </html>

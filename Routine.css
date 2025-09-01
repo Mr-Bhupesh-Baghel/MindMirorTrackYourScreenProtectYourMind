@@ -1,0 +1,89 @@
+/* Overall body styling */
+body { 
+    font-family: Arial, sans-serif;   /* Font family for all text */
+    background: #f4f4f4;              /* Light gray background */
+    margin: 20px;                     /* Space around the body */
+}
+
+/* Heading (h2) spacing */
+h2 {
+    margin-top: 50px;                 /* Extra space above headings */
+}
+
+/* Task group box styling */
+.task-group {
+    background: white;                /* White background for task group */
+    padding: 15px;                    /* Inner spacing */
+    border-radius: 10px;              /* Rounded corners */
+    margin-bottom: 35px;              /* Space below each group */
+    box-shadow: 0 2px 8px rgba(157, 101, 101, 0.1); /* Soft shadow */
+}
+
+/* Label styling for tasks */
+label {
+    display: block;                   /* Each label in new line */
+    margin-bottom: 25px;              /* Space below each label */
+    cursor: pointer;                  /* Makes label clickable */
+}
+
+/* Progress bar container */
+.progress-bar {
+    width: 100%;                      /* Full width */
+    height: 20px;                     /* Bar height */
+    background: #ccc;                  /* Gray background */
+    border-radius: 10px;              /* Rounded edges */
+    overflow: hidden;                 /* Hides overflow content */
+    margin: 10px 0;                   /* Vertical spacing */
+}
+
+/* Actual progress inside bar */
+.progress {
+    height: 100%;                     /* Full height of bar */
+    background: #4caf50;              /* Green progress color */
+    width: 0%;                        /* Start with 0% width */
+    text-align: center;               /* Center text inside */
+    color: white;                     /* White text */
+    line-height: 20px;                /* Align text vertically */
+    font-size: 12px;                  /* Small font for % text */
+}
+
+/* "Add Task" section spacing */
+.add-task {
+    margin-top: 10px;                 /* Space above add task area */
+}
+
+/* Input box for adding task */
+input[type="text"] {
+    padding: 5px;                     /* Inner padding */
+    width: 70%;                       /* Takes 70% width */
+}
+
+/* General button styling */
+button {
+    padding: 5px 10px;                /* Inner padding */
+    margin-left: 5px;                 /* Small space from input */
+}
+
+/* Each task item container */
+.task-item {
+    display: flex;                    /* Flexbox for alignment */
+    align-items: center;              /* Center items vertically */
+    justify-content: space-between;   /* Spread items left & right */
+}
+
+/* Task text inside task item */
+.task-item span {
+    flex: 1;                          /* Takes available space */
+}
+
+/* Horizontal layout container */
+.H {
+    display: flex;                    /* Flexbox */
+    justify-content: space-between;   /* Space between children */
+    gap: 10px;                        /* Gap between children */
+}
+
+/* Task container text bigger */
+#taskContainer {
+    font-size: 30px;                  /* Bigger font size for text */
+}

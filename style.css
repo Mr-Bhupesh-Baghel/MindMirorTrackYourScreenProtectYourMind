@@ -1,4 +1,6 @@
-/* ===== Global Styles ===== */
+/* ==========================
+   Global Styles
+========================== */
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +10,9 @@ body {
   line-height: 1.6;
 }
 
-/* ===== Container ===== */
+/* ==========================
+   Container
+========================== */
 .container {
   max-width: 960px;
   margin: 50px auto;
@@ -16,20 +20,24 @@ body {
   text-align: center;
 }
 
-/* ===== Heading ===== */
+/* ==========================
+   Heading
+========================== */
 h1 {
-  font-size: 2.8em;
+  font-size: 2.8rem;
   color: #0f172a;
   margin-bottom: 12px;
 }
 
 .subtitle {
-  font-size: 1.25em;
+  font-size: 1.25rem;
   color: #475569;
   margin-bottom: 35px;
 }
 
-/* ===== Dashboard Grid ===== */
+/* ==========================
+   Dashboard Grid
+========================== */
 .dashboard {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -37,7 +45,9 @@ h1 {
   padding: 0 10px;
 }
 
-/* ===== Card Component ===== */
+/* ==========================
+   Card Component
+========================== */
 .card {
   background-color: #f0f4f8;
   padding: 24px;
@@ -53,35 +63,38 @@ h1 {
 }
 
 .card h2 {
-  margin-top: 0;
-  font-size: 1.5em;
+  margin: 0 0 12px;
+  font-size: 1.5rem;
   color: #1e293b;
-  margin-bottom: 12px;
 }
 
 .card p,
 .card li {
-  font-size: 1em;
-  color: #334155;
   margin: 8px 0;
+  font-size: 1rem;
+  color: #334155;
 }
 
-/* ===== Template Section ===== */
+/* ==========================
+   Template Section
+========================== */
 .template-section p {
   margin-bottom: 12px;
+  font-size: 1rem;
   color: #555;
-  font-size: 1em;
 }
 
-/* ===== Template Button ===== */
+/* ==========================
+   Template Button
+========================== */
 .template-button {
   display: inline-block;
   padding: 12px 24px;
   background-color: #0066ff;
   color: #fff;
+  font-weight: 700;
   text-decoration: none;
   border-radius: 8px;
-  font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
@@ -89,3 +102,16 @@ h1 {
   background-color: #0047b3;
   transform: scale(1.05);
 }
+
+/* ==========================
+   Iframe Styling (Fixed)
+========================== */
+.frame {
+  width: 100%;              /* take full width of container */
+  max-width: 200%;          /* prevent overflow */
+  height: 500px;            /* adjust height */
+  border: none;
+  border-radius: 12px;      /* match card style */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
