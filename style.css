@@ -1,5 +1,5 @@
 /* ==========================
-   Global Styles
+   Base Styles (Desktop-first)
 ========================== */
 body {
   margin: 0;
@@ -115,3 +115,80 @@ h1 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+/* ========================== 
+   Responsive Media Queries
+========================== */
+
+/* ---------- Tablets (<=768px) ---------- */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+  }
+
+  /* Logo centered */
+  .logo {
+    max-width: 160px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  /* Grid adjusts to 2 columns */
+  .dashboard {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .frame {
+    height: 300px;
+  }
+}
+
+/* ---------- Mobile (<=480px) ---------- */
+@media (max-width: 480px) {
+  .container {
+    margin: 15px auto;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Logo smaller */
+  .logo {
+    max-width: 120px;
+    margin: 0 auto 15px;
+  }
+
+  /* Dashboard full-width cards */
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Button full width */
+  .template-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .frame {
+    height: 220px;
+  }
+}

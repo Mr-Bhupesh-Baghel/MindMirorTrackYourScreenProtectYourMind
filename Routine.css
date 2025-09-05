@@ -1,89 +1,144 @@
-/* Overall body styling */
+/* ==========================
+   Base Styles (Desktop-first)
+========================== */
 body { 
-    font-family: Arial, sans-serif;   /* Font family for all text */
-    background: #f4f4f4;              /* Light gray background */
-    margin: 20px;                     /* Space around the body */
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 20px;
 }
 
-/* Heading (h2) spacing */
 h2 {
-    margin-top: 50px;                 /* Extra space above headings */
+    margin-top: 50px;
 }
 
-/* Task group box styling */
 .task-group {
-    background: white;                /* White background for task group */
-    padding: 15px;                    /* Inner spacing */
-    border-radius: 10px;              /* Rounded corners */
-    margin-bottom: 35px;              /* Space below each group */
-    box-shadow: 0 2px 8px rgba(157, 101, 101, 0.1); /* Soft shadow */
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 35px;
+    box-shadow: 0 2px 8px rgba(157, 101, 101, 0.1);
 }
 
-/* Label styling for tasks */
 label {
-    display: block;                   /* Each label in new line */
-    margin-bottom: 25px;              /* Space below each label */
-    cursor: pointer;                  /* Makes label clickable */
+    display: block;
+    margin-bottom: 25px;
+    cursor: pointer;
 }
 
-/* Progress bar container */
 .progress-bar {
-    width: 100%;                      /* Full width */
-    height: 20px;                     /* Bar height */
-    background: #ccc;                  /* Gray background */
-    border-radius: 10px;              /* Rounded edges */
-    overflow: hidden;                 /* Hides overflow content */
-    margin: 10px 0;                   /* Vertical spacing */
+    width: 100%;
+    height: 20px;
+    background: #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
 }
 
-/* Actual progress inside bar */
 .progress {
-    height: 100%;                     /* Full height of bar */
-    background: #4caf50;              /* Green progress color */
-    width: 0%;                        /* Start with 0% width */
-    text-align: center;               /* Center text inside */
-    color: white;                     /* White text */
-    line-height: 20px;                /* Align text vertically */
-    font-size: 12px;                  /* Small font for % text */
+    height: 100%;
+    background: #4caf50;
+    width: 0%;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+    font-size: 12px;
 }
 
-/* "Add Task" section spacing */
 .add-task {
-    margin-top: 10px;                 /* Space above add task area */
+    margin-top: 10px;
 }
 
-/* Input box for adding task */
 input[type="text"] {
-    padding: 5px;                     /* Inner padding */
-    width: 70%;                       /* Takes 70% width */
+    padding: 5px;
+    width: 70%;
 }
 
-/* General button styling */
 button {
-    padding: 5px 10px;                /* Inner padding */
-    margin-left: 5px;                 /* Small space from input */
+    padding: 5px 10px;
+    margin-left: 5px;
 }
 
-/* Each task item container */
 .task-item {
-    display: flex;                    /* Flexbox for alignment */
-    align-items: center;              /* Center items vertically */
-    justify-content: space-between;   /* Spread items left & right */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Task text inside task item */
 .task-item span {
-    flex: 1;                          /* Takes available space */
+    flex: 1;
 }
 
-/* Horizontal layout container */
 .H {
-    display: flex;                    /* Flexbox */
-    justify-content: space-between;   /* Space between children */
-    gap: 10px;                        /* Gap between children */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 
-/* Task container text bigger */
 #taskContainer {
-    font-size: 30px;                  /* Bigger font size for text */
+    font-size: 30px;
+}
+
+/* ==========================
+   Responsive Media Queries
+========================== */
+
+/* Tablets (portrait & landscape, ≤1024px) */
+@media (max-width: 1024px) {
+    body {
+        margin: 15px;
+    }
+    #taskContainer {
+        font-size: 26px;
+    }
+    input[type="text"] {
+        width: 65%;
+    }
+}
+
+/* Mobiles (≤768px) */
+@media (max-width: 768px) {
+    body {
+        margin: 10px;
+        font-size: 15px;
+    }
+    h2 {
+        font-size: 1.6rem;
+        margin-top: 30px;
+    }
+    #taskContainer {
+        font-size: 22px;
+    }
+    .H {
+        flex-direction: column;
+        gap: 15px;
+    }
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    button {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Small Mobiles (≤480px) */
+@media (max-width: 480px) {
+    body {
+        margin: 5px;
+        font-size: 14px;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+    #taskContainer {
+        font-size: 18px;
+    }
+    .progress-bar {
+        height: 16px;
+    }
+    .progress {
+        font-size: 10px;
+        line-height: 16px;
+    }
 }
