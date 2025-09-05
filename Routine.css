@@ -1,7 +1,7 @@
-/* ==========================
+/* ========================== 
    Base Styles (Desktop-first)
 ========================== */
-body { 
+body {
     font-family: Arial, sans-serif;
     background: #f4f4f4;
     margin: 20px;
@@ -53,11 +53,6 @@ input[type="text"] {
     width: 70%;
 }
 
-button {
-    padding: 5px 10px;
-    margin-left: 5px;
-}
-
 .task-item {
     display: flex;
     align-items: center;
@@ -82,45 +77,34 @@ button {
    Base Button Styles
 ========================== */
 button {
-    display: inline-flex;           /* allows icon + text alignment */
-    align-items: center;            /* vertical centering */
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    gap: 6px;                       /* space between icon & text */
+    gap: 6px;
 
     padding: 10px 16px;
     margin: 6px 4px;
     min-width: 110px;
-
+    min-height: 44px;
     font-size: 15px;
     font-weight: 500;
     text-align: center;
 
-    color: #fff;
-    background: #4caf50;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 
     transition: background 0.25s ease, transform 0.15s ease;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    white-space: normal;
+    /* पहले nowrap था */
+    word-wrap: break-word;
+    /* बड़े words को तोड़ देगा */
+
 }
 
-button:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
 
-button:active {
-    background: #3e8e41;
-    transform: translateY(0);
-}
 
-/* Disabled state */
-button:disabled {
-    background: #bbb;
-    cursor: not-allowed;
-    box-shadow: none;
-}
 
 
 
@@ -128,86 +112,100 @@ button:disabled {
    Responsive Media Queries
 ========================== */
 
-
-/* ==========================
-   Responsive Media Queries
-========================== */
-
-/* Tablets (≤1024px) */
+/* Tablet (up to 1024px) */
 @media (max-width: 1024px) {
     body {
         margin: 15px;
     }
-    h2 {
-        font-size: 1.8rem;
-    }
+
     #taskContainer {
         font-size: 26px;
     }
-    input[type="text"] {
-        width: 65%;
+
+    h2 {
+        font-size: 1.6rem;
+        margin-top: 35px;
     }
+
+    input[type="text"] {
+        width: 80%;
+    }
+
     button {
+        min-width: 100px;
         font-size: 14px;
-        padding: 9px 14px;
-        min-width: 95px;
     }
 }
 
-/* Mobiles (≤768px) */
+/* Mobile (up to 768px) */
 @media (max-width: 768px) {
     body {
         margin: 10px;
-        font-size: 15px;
     }
-    h2 {
-        font-size: 1.6rem;
-        margin-top: 30px;
-    }
+
     #taskContainer {
         font-size: 22px;
     }
-    .H {
-        flex-direction: column;
-        gap: 15px;
-    }
-    input[type="text"] {
-        width: 100%;
-        margin-bottom: 8px;
-    }
-    button {
-        display: block;        /* stack vertically */
-        width: 100%;           /* full width */
-        margin: 10px 0;
-        font-size: 15px;
-        padding: 12px;
-        border-radius: 10px;
-    }
-}
 
-/* Small Mobiles (≤480px) */
-@media (max-width: 480px) {
-    body {
-        margin: 5px;
-        font-size: 14px;
-    }
     h2 {
         font-size: 1.4rem;
+        margin-top: 25px;
     }
+
+    .task-group {
+        padding: 12px;
+        margin-bottom: 25px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .H {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    button {
+        width: 100%;
+        /* Full width for touch-friendly buttons */
+        min-width: unset;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .progress {
+        font-size: 11px;
+        /* mobile me thoda chhota */
+    }
+
+}
+
+/* Small Mobile (up to 480px) */
+@media (max-width: 480px) {
     #taskContainer {
-        font-size: 18px;
+        font-size: 20px;
     }
-    .progress-bar {
-        height: 16px;
+
+    h2 {
+        font-size: 1.2rem;
     }
+
+    button {
+        font-size: 13px;
+        padding: 10px;
+    }
+
     .progress {
         font-size: 10px;
-        line-height: 16px;
-    }
-    button {
-        font-size: 14px;
-        padding: 14px;
-        border-radius: 12px;   /* bigger for finger taps */
-        min-width: auto;       /* flexible */
+        /* extra small mobile */
     }
 }
