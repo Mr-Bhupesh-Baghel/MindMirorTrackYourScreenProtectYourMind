@@ -12,7 +12,7 @@ function loadHolidayTasks() {
   holidayBox.className = "task-group";
 
   const heading = document.createElement("h2");
-  heading.textContent = "🎉 Holiday Tasks";
+  heading.textContent = "🎉 Holiday, 🐸Frog! Tasks";
   holidayBox.appendChild(heading);
 
   list.forEach((task, index) => {
