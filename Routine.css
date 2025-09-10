@@ -1,14 +1,20 @@
-/* ========================== 
+/* ==========================  
    Base Styles 
 ========================== */
 body {
-    display: flex;
-    align-items: flex-start;
     justify-content: center;
+    display: flex;
     font-family: Arial, sans-serif;
     background: #f4f4f4;
-    margin: 20px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center; 
 }
+* {
+  word-wrap: break-word;   /* bade words ko break karega */
+  overflow-wrap: anywhere; /* naya standard, aur jyada reliable */
+}
+
 
 h2 {
     margin-top: 50px;
@@ -80,11 +86,6 @@ input[type="text"] {
    Base Button Styles
 ========================== */
 button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-
     padding: 10px 16px;
     margin: 6px 4px;
     min-width: 110px;
