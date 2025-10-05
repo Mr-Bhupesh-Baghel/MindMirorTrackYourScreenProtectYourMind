@@ -117,45 +117,42 @@ h1, h2 {
 <button class="reset-btn" onclick="resetTracker()">🔁 Reset All Data</button>
 
 <script>
-const totalDays = 50;
-const basePushups = 10;
+  const totalDays = 100;  // 100-day challenge
 const tracker = document.getElementById('tracker');
 const attemptList = document.getElementById('attempt-list');
 const summary = document.getElementById('summary');
 const progress = JSON.parse(localStorage.getItem('pushupProgress')) || {};
 
 const messages = [
-  "Start strong! 💪", "Push a bit harder! 🔥", "Feeling it yet? 😅", "Nice form!", "You're doing great!",
-  "Almost a week done!", "1 week complete! 🎉", "Keep pushing!", "Discipline over motivation!", "You're in the zone!",
+  "Start strong! 💪", "Keep going! 🔥", "Feeling it yet? 😅", "Nice form!", "You're doing great!",
+  "Push a bit harder!", "One step at a time!", "Consistency is key!", "Keep pushing!", "Discipline over motivation!",
   "10 days down! 🔥", "Leveling up!", "You’re stronger than you think!", "Crush it today!", "Midway milestone soon!",
   "Body is transforming!", "Respect your progress!", "Push harder!", "Don’t slow down!", "Halfway done! 🏁",
   "Now it gets fun!", "More control, more strength!", "You're a machine!", "This is your routine!", "Mind over muscle!",
   "You inspire yourself!", "Momentum is real!", "Stay sharp!", "Only a few days left!", "Push-up master loading…",
   "This habit = power!", "No breaks now!", "Fire mode ON 🔥", "Keep proving it!", "Discipline > Excuses",
   "Almost there!", "Strength, grit, growth!", "Big goals, small steps!", "Never back down!", "Beast mode unlocked!",
-  "Closer than ever!", "Your 50 is near!", "Legend mode starting!", "Break all limits!", "Hard work pays off!",
-  "Final lap!", "Stay consistent!", "Push-up BOSS!", "49 Done – One more!", "🎯 50/50 – MISSION COMPLETE! 🏆"
+  "Closer than ever!", "Keep going strong!", "Legend mode starting!", "Break all limits!", "Hard work pays off!",
+  "Final lap!", "Stay consistent!", "Push-up BOSS!", "Almost 100! 💥", "🎯 100/100 – MISSION COMPLETE! 🏆"
 ];
 
 function renderTracker() {
   tracker.innerHTML = '';
   const totalCompleted = Object.keys(progress).length;
 
-  // Check if challenge complete
   if (totalCompleted >= totalDays) {
     summary.innerHTML = `<h3>🏆 Challenge Complete!</h3>
-      <p>You’ve completed all 50 days! 🎯</p>
+      <p>You’ve completed all 100 days! 🎯</p>
       <p>Keep going — continue logging your push-ups below 👇</p>`;
   } else {
     summary.innerHTML = `<p>Progress: <strong>${totalCompleted}/${totalDays}</strong> days completed.</p>`;
   }
 
-  // Continue tracker forever (post-challenge)
   const trackerLength = Math.max(totalDays, totalCompleted + 5);
 
   for (let i = 1; i <= trackerLength; i++) {
     const record = progress[i] || { status: 'pending', count: 0, date: null };
-    const target = basePushups + (i - 1);
+    const target = i; // Target push-ups from 1 to 100
     const message = messages[i - 1] || "Keep the streak alive! 💥";
     const div = document.createElement('div');
     div.className = `day ${record.status}`;
@@ -227,6 +224,7 @@ function resetTracker() {
 }
 
 renderTracker();
+
 </script>
 
 </body>
