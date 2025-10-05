@@ -1,181 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Push-up Tracker</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Push-up Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      padding: 30px;
+      flex-wrap: wrap;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-body { 
-  font-family: Arial, sans-serif;
-  background: #f5f7fa;
-  color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  padding: 30px;
-  flex-wrap: wrap;
-  transition: background 0.3s ease, color 0.3s ease;
-}
+    .container {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 320px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-.container {
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  padding: 20px;
-  width: 320px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    .container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
 
-.container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
+    h2 {
+      text-align: center;
+      color: #007bff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-h2 {
-  text-align: center;
-  color: #007bff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+    .progress-bar {
+      background: #e9ecef;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 25px;
+      margin: 10px 0;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.progress-bar {
-  background: #e9ecef;
-  border-radius: 20px;
-  overflow: hidden;
-  height: 25px;
-  margin: 10px 0;
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-}
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #28a745, #34ce57);
+      width: 0%;
+      transition: width 0.4s ease-in-out, background 0.3s ease;
+    }
 
-.progress {
-  height: 100%;
-  background: linear-gradient(90deg, #28a745, #34ce57);
-  width: 0%;
-  transition: width 0.4s ease-in-out, background 0.3s ease;
-}
+    input,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: all 0.2s ease-in-out;
+    }
 
-input, button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  transition: all 0.2s ease-in-out;
-}
+    input {
+      background: #f9f9f9;
+      color: #111;
+    }
 
-input {
-  background: #f9f9f9;
-  color: #111;
-}
+    input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
 
-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0,123,255,0.3);
-}
+    button {
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      transition: background 0.3s, transform 0.2s;
+    }
 
-button {
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  transition: background 0.3s, transform 0.2s;
-}
+    .add-btn {
+      background: #28a745;
+    }
 
-.add-btn {
-  background: #28a745;
-}
+    .add-btn:hover {
+      background: #34ce57;
+      transform: scale(1.03);
+    }
 
-.add-btn:hover {
-  background: #34ce57;
-  transform: scale(1.03);
-}
+    .reset-btn {
+      background: #dc3545;
+    }
 
-.reset-btn {
-  background: #dc3545;
-}
+    .reset-btn:hover {
+      background: #e84c5c;
+      transform: scale(1.03);
+    }
 
-.reset-btn:hover {
-  background: #e84c5c;
-  transform: scale(1.03);
-}
+    .record-list {
+      margin-top: 10px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+    }
 
-.record-list {
-  margin-top: 10px;
-  background: #f9f9f9;
-  border-radius: 10px;
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
-}
+    .record-item {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 5px 0;
+      transition: background 0.2s ease;
+    }
 
-.record-item {
-  border-bottom: 1px solid #e0e0e0;
-  padding: 5px 0;
-  transition: background 0.2s ease;
-}
+    .record-item:hover {
+      background: #f1f9ff;
+    }
 
-.record-item:hover {
-  background: #f1f9ff;
-}
+    .record-item:last-child {
+      border-bottom: none;
+    }
 
-.record-item:last-child {
-  border-bottom: none;
-}
-
-.total-box {
-  background: #e7f8ee;
-  border-radius: 10px;
-  padding: 8px;
-  margin-top: 10px;
-  text-align: center;
-  color: #155724;
-  font-weight: 600;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-}
-
-</style>
+    .total-box {
+      background: #e7f8ee;
+      border-radius: 10px;
+      padding: 8px;
+      margin-top: 10px;
+      text-align: center;
+      color: #155724;
+      font-weight: 600;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    }
+  </style>
 </head>
+
 <body>
+  <!-- 365-Day Challenge & Daily Push-ups Tracker -->
+  <div class="container" id="challenge-section">
+    <h2>🏆 365-Day Challenge</h2>
+    <div class="progress-bar">
+      <div class="progress" id="challengeProgress"></div>
+    </div>
+    <p id="challengeInfo">Progress: 0 / 365 days</p>
 
-<!-- LEFT: Challenge Tracker -->
-<div class="container" id="challenge-section">
-  <h2>🏆 365-Day Challenge</h2>
-  <p>Total Days: <b>365</b></p>
-  <p>Base Pushups: <b>10/day</b></p>
+    <button class="add-btn" onclick="completeChallengeDay()">Maintain your old capacity</button>
 
-  <div class="progress-bar">
-    <div class="progress" id="challengeProgress"></div>
+    <input type="number" id="pushupCount" placeholder="Enter today's push-ups capacity">
+    <button class="add-btn" onclick="addMaintenanceRecord()">Add Record</button>
+
+    <div class="record-list" id="recordList"></div>
+    <button class="reset-btn" onclick="deleteAllData()">🗑️ Delete All Data</button>
   </div>
-
-  <p id="challengeInfo">Progress: 0 / 365 days</p>
-
-  <button class="add-btn" onclick="completeChallengeDay()">Mark Today Complete</button>
-</div>
-
-<!-- RIGHT: Daily Maintenance Tracker -->
-<div class="container" id="maintenance-section">
-  <h2>💪 Daily Push-up Maintenance</h2>
-  <input type="number" id="pushupCount" placeholder="Enter today's push-ups">
-  <button class="add-btn" onclick="addMaintenanceRecord()">Add Record</button>
-
-  <div class="total-box" id="totalBox">Total Push-ups: 0</div>
-  <div class="record-list" id="recordList"></div>
-
-  <button class="reset-btn" onclick="deleteAllData()">🗑️ Delete All Data</button>
-</div>
-
+</body>
 <script>
-  // === 365-DAY CHALLENGE ===
   const totalDays = 365;
   let completedDays = JSON.parse(localStorage.getItem("completedDays")) || 0;
+  let maintenanceRecords = JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
 
   function updateChallengeProgress() {
     const progress = document.getElementById("challengeProgress");
     const info = document.getElementById("challengeInfo");
-    let percent = (completedDays / totalDays) * 100;
-    progress.style.width = percent + "%";
+    progress.style.width = (completedDays / totalDays) * 100 + "%";
     info.textContent = `Progress: ${completedDays} / ${totalDays} days`;
     localStorage.setItem("completedDays", completedDays);
   }
@@ -189,20 +178,10 @@ button {
     }
   }
 
-  updateChallengeProgress();
-
-  // === DAILY MAINTENANCE ===
-  let maintenanceRecords = JSON.parse(localStorage.getItem("maintenanceRecords")) || [];
-
   function addMaintenanceRecord() {
-    const count = document.getElementById("pushupCount").value;
-    if (!count || count <= 0) {
-      alert("Enter a valid number of push-ups!");
-      return;
-    }
-
-    const today = new Date().toLocaleDateString();
-    maintenanceRecords.push({ date: today, pushups: parseInt(count) });
+    const count = parseInt(document.getElementById("pushupCount").value);
+    if (!count || count <= 0) return alert("Enter a valid number of push-ups!");
+    maintenanceRecords.push({ date: new Date().toLocaleDateString(), pushups: count });
     localStorage.setItem("maintenanceRecords", JSON.stringify(maintenanceRecords));
     document.getElementById("pushupCount").value = "";
     renderMaintenanceRecords();
@@ -213,26 +192,22 @@ button {
     list.innerHTML = maintenanceRecords
       .map(rec => `<div class="record-item"><b>${rec.date}</b>: ${rec.pushups} push-ups</div>`)
       .join("");
-
-    const total = maintenanceRecords.reduce((sum, rec) => sum + rec.pushups, 0);
-    document.getElementById("totalBox").textContent = `Total Push-ups: ${total}`;
   }
 
-  renderMaintenanceRecords();
-
-  // === DELETE ALL DATA ===
   function deleteAllData() {
-    if (confirm("⚠️ Are you sure you want to delete all data? This cannot be undone!")) {
-      localStorage.removeItem("completedDays");
-      localStorage.removeItem("maintenanceRecords");
-      completedDays = 0;
-      maintenanceRecords = [];
-      updateChallengeProgress();
-      renderMaintenanceRecords();
-      alert("✅ All data has been cleared successfully!");
-    }
+    if (!confirm("⚠️ Are you sure you want to delete all data?")) return;
+    localStorage.removeItem("completedDays");
+    localStorage.removeItem("maintenanceRecords");
+    completedDays = 0;
+    maintenanceRecords = [];
+    updateChallengeProgress();
+    renderMaintenanceRecords();
+    alert("✅ All data cleared!");
   }
+
+  // Initial render
+  updateChallengeProgress();
+  renderMaintenanceRecords();
 </script>
 
-</body>
 </html>
