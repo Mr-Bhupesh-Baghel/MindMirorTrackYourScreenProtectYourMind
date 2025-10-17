@@ -20,6 +20,7 @@
       </div>
     </header>
     <!-- Task Display Area -->
+    <ul id="affirmationList"></ul>
     <div id="HtaskContainer"></div>
     <div id="taskContainer"></div>
     <!-- Submit Button -->
@@ -30,6 +31,15 @@
 
 
 
+
+
+
+    <!-- Embedded Habit Sections -->
+    <section class="H">
+      <iframe src="pushup.html" width="60%" height="500" style="border:none;" title="Pushups Tracker"></iframe>
+      <iframe src="whater.html" width="40%" height="500" style="border:none;" title="Water Tracker"></iframe>
+    </section>
+
     <!-- Add Custom and Holiday Task -->
     <div class="add-task task-group">
       <h3>Add Daily Custom Task</h3>
@@ -39,6 +49,13 @@
       <input type="text" id="HolidayTaskInput" placeholder="New task">
       <button onclick="addHolidayTask()">➕ Add </button>
 
+      <h2>🌸 Daily Affirmations</h2>
+      <input type="text" id="affirmationInput" placeholder="Write your affirmation...">
+      <button id="addBtn">Add Affirmation</button>
+      <button id="clearAllBtn" style="background:#ff4444;">Delete All</button>
+
+
+
       <!-- View Past Work,Download, Delete All Progress-->
       <div class="task-group">
         <button onclick="viewPrevious()">📅 View Previous Work</button>
@@ -47,14 +64,6 @@
       </div>
 
     </div>
-
-
-
-    <!-- Embedded Habit Sections -->
-    <section class="H">
-      <iframe src="pushup.html" width="60%" height="500" style="border:none;" title="Pushups Tracker"></iframe>
-      <iframe src="whater.html" width="40%" height="500" style="border:none;" title="Water Tracker"></iframe>
-    </section>
   </main>
 
   <!-- External Scripts -->

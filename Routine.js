@@ -340,3 +340,51 @@ autoReset();
 loadTasks();
 loadStatus();
 setInterval(autoReset, 60 * 1000);
+
+const input = document.getElementById('affirmationInput');
+    const list = document.getElementById('affirmationList');
+    const addBtn = document.getElementById('addBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+
+    // Load affirmations from localStorage
+    let affirmations = JSON.parse(localStorage.getItem('affirmations')) || [];
+    renderList();
+
+    // Add affirmation
+    addBtn.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (text === '') return alert('Please write something!');
+      affirmations.push(text);
+      localStorage.setItem('affirmations', JSON.stringify(affirmations));
+      input.value = '';
+      renderList();
+    });
+
+    // Delete single affirmation
+    function deleteAffirmation(index) {
+      affirmations.splice(index, 1);
+      localStorage.setItem('affirmations', JSON.stringify(affirmations));
+      renderList();
+    }
+
+    // Delete all affirmations
+    clearAllBtn.addEventListener('click', () => {
+      if (confirm('Delete all affirmations?')) {
+        localStorage.removeItem('affirmations');
+        affirmations = [];
+        renderList();
+      }
+    });
+
+    // Render affirmations on page
+    function renderList() {
+      list.innerHTML = '';
+      affirmations.forEach((text, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${text}</span>
+          <button class="delete-btn" onclick="deleteAffirmation(${index})">X</button>
+        `;
+        list.appendChild(li);
+      });
+    }
