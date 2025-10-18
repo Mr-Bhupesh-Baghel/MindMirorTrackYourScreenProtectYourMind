@@ -23,9 +23,13 @@
     <ul id="affirmationList"></ul>
     <div id="HtaskContainer"></div>
     <div id="taskContainer"></div>
-    <!-- Submit Button -->
+
+    <!-- Submit Button,View Past Work,Download, Delete All Progress-->
     <section>
       <button onclick="submitAndNextDay()">📤 Submit Your Work / Next Day</button>
+      <button onclick="viewPrevious()">📅 View Previous Work</button>
+      <button onclick="exportToExcel()">📥 Download Excel</button>
+      <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
     </section>
 
 
@@ -56,12 +60,7 @@
 
 
 
-      <!-- View Past Work,Download, Delete All Progress-->
-      <div class="task-group">
-        <button onclick="viewPrevious()">📅 View Previous Work</button>
-        <button onclick="exportToExcel()">📥 Download Excel</button>
-        <button onclick="deleteSpecificData()">🗑️ Delete All Progress Data</button>
-      </div>
+
 
     </div>
   </main>
