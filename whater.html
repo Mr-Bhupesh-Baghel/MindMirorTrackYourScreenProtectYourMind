@@ -6,121 +6,199 @@
   <title>Water Intake Tracker</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  background: #e0f7fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-.tracker-container {
-  text-align: center;
-  background: white;
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
+    .tracker-container {
+      text-align: center;
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 320px;
+    }
 
-.progress-circle {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: conic-gradient(#00bcd4 0%, #ddd 0%);
-  margin: 1rem auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
+    .progress-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(#00bcd4 0%, #ddd 0%);
+      margin: 1rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+    }
 
-#intakeText {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-}
+    #intakeText {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
 
-.buttons button {
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
+    .buttons button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-.buttons button:first-child {
-  background-color: #00bcd4;
-  color: white;
-}
+    .buttons button:nth-child(1) { background-color: #00bcd4; color: white; }
+    .buttons button:nth-child(2) { background-color: #ff5252; color: white; }
+    .buttons button:nth-child(3) { background-color: #4caf50; color: white; }
+    .buttons button:nth-child(4) { background-color: #9c27b0; color: white; }
 
-.buttons button:last-child {
-  background-color: #ff5252;
-  color: white;
-}
+    .history {
+      margin-top: 20px;
+      text-align: left;
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+      max-height: 200px;
+      overflow-y: auto;
+    }
 
+    .history h3 {
+      text-align: center;
+      margin: 0 0 10px 0;
+    }
+
+    .history ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .history li {
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background: #ff5252;
+      color: white;
+      border: none;
+      padding: 3px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="tracker-container">
-    <h1>Daily Water Tracker</h1>
+    <h1>💧 Daily Water Tracker</h1>
     <div class="progress-circle" id="progressCircle">
       <span id="progressText">0%</span>
     </div>
     <p id="intakeText">0 / 8 Glasses</p>
+
     <div class="buttons">
       <button onclick="addWater()">+ Add</button>
       <button onclick="removeWater()">- Remove</button>
+      <button onclick="viewProgress()">View History</button>
+      <button onclick="deleteAll()">Delete All</button>
+    </div>
+
+    <div class="history" id="historyBox">
+      <h3>📅 Date-wise Progress</h3>
+      <ul id="historyList"></ul>
     </div>
   </div>
 
   <script>
     const MAX_GLASSES = 8;
+    let waterIntake = 0;
+    let today = new Date().toLocaleDateString();
 
-let waterIntake = 0;
-let lastSavedDate = localStorage.getItem('lastDate') || '';
-let today = new Date().toLocaleDateString();
+    // Initialize or reset for new day
+    function loadToday() {
+      const history = JSON.parse(localStorage.getItem("history")) || {};
+      waterIntake = history[today] ? history[today] : 0;
+      updateUI();
+    }
 
-function resetIfNewDay() {
-  if (lastSavedDate !== today) {
-    waterIntake = 0;
-    localStorage.setItem('lastDate', today);
-    localStorage.setItem('intake', '0');
-  } else {
-    waterIntake = parseInt(localStorage.getItem('intake')) || 0;
-  }
-}
+    function updateUI() {
+      let percent = (waterIntake / MAX_GLASSES) * 100;
+      document.getElementById("progressText").textContent = `${Math.round(percent)}%`;
+      document.getElementById("intakeText").textContent = `${waterIntake} / ${MAX_GLASSES} Glasses`;
+      document.getElementById("progressCircle").style.background =
+        `conic-gradient(#00bcd4 ${percent}%, #ddd ${percent}%)`;
+    }
 
-function updateUI() {
-  let percent = (waterIntake / MAX_GLASSES) * 100;
-  document.getElementById("progressText").textContent = `${Math.round(percent)}%`;
-  document.getElementById("intakeText").textContent = `${waterIntake} / ${MAX_GLASSES} Glasses`;
-  document.getElementById("progressCircle").style.background = 
-    `conic-gradient(#00bcd4 ${percent}%, #ddd ${percent}%)`;
-}
+    function addWater() {
+      if (waterIntake < MAX_GLASSES) {
+        waterIntake++;
+        saveProgress();
+        updateUI();
+      }
+    }
 
-function addWater() {
-  if (waterIntake < MAX_GLASSES) {
-    waterIntake++;
-    localStorage.setItem('intake', waterIntake);
-    updateUI();
-  }
-}
+    function removeWater() {
+      if (waterIntake > 0) {
+        waterIntake--;
+        saveProgress();
+        updateUI();
+      }
+    }
 
-function removeWater() {
-  if (waterIntake > 0) {
-    waterIntake--;
-    localStorage.setItem('intake', waterIntake);
-    updateUI();
-  }
-}
+    function saveProgress() {
+      const history = JSON.parse(localStorage.getItem("history")) || {};
+      history[today] = waterIntake;
+      localStorage.setItem("history", JSON.stringify(history));
+    }
 
-window.onload = () => {
-  resetIfNewDay();
-  updateUI();
-};
+    function viewProgress() {
+      const historyBox = document.getElementById("historyBox");
+      const historyList = document.getElementById("historyList");
+      historyList.innerHTML = "";
 
+      const history = JSON.parse(localStorage.getItem("history")) || {};
+      const dates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
+
+      if (dates.length === 0) {
+        historyList.innerHTML = "<li>No data found.</li>";
+      } else {
+        dates.forEach(date => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span><b>${date}</b>: ${history[date]} glasses</span>
+                          <button class="delete-btn" onclick="deleteDate('${date}')">✖</button>`;
+          historyList.appendChild(li);
+        });
+      }
+
+      historyBox.style.display = historyBox.style.display === "none" ? "block" : "none";
+    }
+
+    function deleteDate(date) {
+      const history = JSON.parse(localStorage.getItem("history")) || {};
+      delete history[date];
+      localStorage.setItem("history", JSON.stringify(history));
+      viewProgress();
+    }
+
+    function deleteAll() {
+      if (confirm("Delete all water intake history?")) {
+        localStorage.removeItem("history");
+        waterIntake = 0;
+        updateUI();
+        document.getElementById("historyList").innerHTML = "";
+        alert("All progress deleted!");
+      }
+    }
+
+    window.onload = loadToday;
   </script>
 </body>
 </html>
