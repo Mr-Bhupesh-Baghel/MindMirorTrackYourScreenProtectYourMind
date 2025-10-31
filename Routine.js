@@ -1,7 +1,7 @@
 // 🔹 Default section define kar rahe hain jisme ek task diya gaya hai  
 const sections = {
   "🛠️ Start ": [
-    "🔹Breathe 🫁 Focus 👀 (What is necessary now) Attack"
+    "🔹Select The One Task, Breathe 🫁 Focus 👀 (immerse yourself) keep doing"
   ]
 };
 
